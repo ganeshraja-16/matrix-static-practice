@@ -1,4 +1,4 @@
-name: Scenario 1 - Baseline Matrix
+name: Scenario 2 - Fail Fast True
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
 jobs:
   test-job:
     strategy:
+      fail-fast: true
       matrix:
         id: [1, 2, 3, 4]
     runs-on: ubuntu-latest
@@ -17,5 +18,10 @@ jobs:
       - name: Simulate work
         run: |
           echo "Job ${{ matrix.id }} starting work"
-          sleep 10
+          if [ "${{ matrix.id }}" == "3" ]; then
+            sleep 5
+            echo "Job 3 is failing on purpose"
+            exit 1
+          fi
+          sleep 15
           echo "Job ${{ matrix.id }} finished successfully"
