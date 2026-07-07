@@ -1,4 +1,4 @@
-name: Scenario 4 - Continue On Error True
+name: Scenario 5 - Combined Fail Fast and Continue On Error
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
       matrix:
         id: [1, 2, 3, 4]
     runs-on: ubuntu-latest
-    continue-on-error: true
+    continue-on-error: ${{ matrix.id == 3 }}
     steps:
       - name: Show which job this is
         run: echo "This is job number ${{ matrix.id }}"
@@ -19,9 +19,9 @@ jobs:
       - name: Simulate work
         run: |
           echo "Job ${{ matrix.id }} starting work"
-          if [ "${{ matrix.id }}" == "3" ]; then
+          if [ "${{ matrix.id }}" == "3" ] || [ "${{ matrix.id }}" == "4" ]; then
             sleep 5
-            echo "Job 3 is failing on purpose"
+            echo "Job ${{ matrix.id }} is failing on purpose"
             exit 1
           fi
           sleep 15
