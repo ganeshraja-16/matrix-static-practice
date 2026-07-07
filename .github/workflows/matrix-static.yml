@@ -1,4 +1,4 @@
-name: Scenario 2 - Fail Fast True
+name: Scenario 3 - Fail Fast False
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 jobs:
   test-job:
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         id: [1, 2, 3, 4]
     runs-on: ubuntu-latest
