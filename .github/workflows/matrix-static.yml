@@ -1,4 +1,4 @@
-name: Scenario 6 - Max Parallel
+name: Scenario 7 - Include And Exclude
 
 on:
   push:
@@ -8,16 +8,20 @@ jobs:
   test-job:
     strategy:
       fail-fast: false
-      max-parallel: 2
       matrix:
         id: [1, 2, 3, 4]
+        include:
+          - id: 1
+            note: this-one-is-special
+        exclude:
+          - id: 2
     runs-on: ubuntu-latest
     steps:
       - name: Show which job this is
-        run: echo "This is job number ${{ matrix.id }}"
+        run: echo "This is job number ${{ matrix.id }}, note is ${{ matrix.note || 'no-note' }}"
 
       - name: Simulate work
         run: |
           echo "Job ${{ matrix.id }} starting work"
-          sleep 15
+          sleep 5
           echo "Job ${{ matrix.id }} finished successfully"
