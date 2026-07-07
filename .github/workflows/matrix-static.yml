@@ -1,4 +1,4 @@
-name: Scenario 3 - Fail Fast False
+name: Scenario 4 - Continue On Error True
 
 on:
   push:
@@ -7,10 +7,11 @@ on:
 jobs:
   test-job:
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         id: [1, 2, 3, 4]
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: Show which job this is
         run: echo "This is job number ${{ matrix.id }}"
