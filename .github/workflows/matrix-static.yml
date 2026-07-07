@@ -1,0 +1,21 @@
+name: Scenario 1 - Baseline Matrix
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test-job:
+    strategy:
+      matrix:
+        id: [1, 2, 3, 4]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show which job this is
+        run: echo "This is job number ${{ matrix.id }}"
+
+      - name: Simulate work
+        run: |
+          echo "Job ${{ matrix.id }} starting work"
+          sleep 10
+          echo "Job ${{ matrix.id }} finished successfully"
